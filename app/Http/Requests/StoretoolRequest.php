@@ -9,9 +9,10 @@ class StoretoolRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
+    //alterado para permitir o cadastro das nossas ferramentas!
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

@@ -9,4 +9,10 @@ class tool extends Model
 {
     /** @use HasFactory<\Database\Factories\ToolFactory> */
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'link',
+        'description',
+        'tags'
+    ];
 }

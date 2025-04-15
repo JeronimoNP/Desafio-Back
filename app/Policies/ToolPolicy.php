@@ -16,6 +16,11 @@ class ToolPolicy
         return false;
     }
 
+    public function store(User $user)
+    {
+        return true;
+    }
+
     /**
      * Determine whether the user can view the model.
      */
@@ -29,7 +34,7 @@ class ToolPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**

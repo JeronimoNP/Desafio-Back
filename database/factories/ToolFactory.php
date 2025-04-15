@@ -17,7 +17,12 @@ class ToolFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->words(3, true),
+            'link' => $this->faker->url(),
+            'description' => $this->faker->sentence(12),
+            'tags' => json_encode($this->faker->randomElements([
+                 'api', 'web', 'backend', 'frontend', 'security', 'auth', 'laravel', 'javascript', 'tools'
+            ]), rand(2,5))
         ];
     }
 }

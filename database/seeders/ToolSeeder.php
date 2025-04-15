@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tool;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,9 @@ class ToolSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Tool::factory()
+            ->count(25)
+            ->create();
     }
+
 }
