@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tool extends Model
-{
-    /** @use HasFactory<\Database\Factories\ToolFactory> */
+class Tool extends Model{
+    
     use HasFactory;
+
+    //fields that can be filled in
     protected $fillable = [
         'title',
         'link',
         'description',
         'tags'
     ];
+
+    //protects id from forced insertion
+    protected $guarded = ['id'];
 }

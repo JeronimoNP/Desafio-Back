@@ -15,6 +15,8 @@ class StoretoolRequest extends FormRequest
         return true;
     }
 
+    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +25,10 @@ class StoretoolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|min:2|max:255',
+            'link' => 'required|url',
+            'description' => 'required|string',
+            'tags' => 'required|array'
         ];
     }
 }

@@ -11,7 +11,7 @@ class UpdatetoolRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdatetoolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|min:2|max:255',
+            'link' => 'required|url',
+            'description' => 'required|string',
+            'tags' => 'required|array'
         ];
     }
 }

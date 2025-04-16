@@ -12,19 +12,30 @@ use App\Http\Resources\V1\ToolCollection;
 
 class ToolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
+        //capture the tags in the query
         $tag = $request->query('tag'); 
 
-        if($tag){
-            return Tool::whereJsonContains('tags', $tag)->get();
-        }else{
+        if ($tag) {
+
+            $tags = explode(',', $tag);
+            $query = Tool::query();
+            
+            // Applies a whereJsonContains to each tag (AND operation)
+            foreach ($tags as $tag) {
+                $query->whereJsonContains('tags', $tag);
+            }
+            $data = $query->get();
+
+            return $data;
+        } else {
+            //return all data
             return Tool::paginate();
         }
     }
+    
 
     public function create()
     {
@@ -34,25 +45,30 @@ class ToolController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoretoolRequest $request)
+    public function store(UpdatetoolRequest $request)
     {
-        //Validando a requisição
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'link' => 'required|url',
-            'description' => 'required|string',
-            'tags' => 'required|array'
-        ]);
-
-        $tool = tool::create([
-            'title' => $data['title'],
-            'link' => $data['link'],
-            'description' => $data['description'],
-            'tags' => json_encode($data['tags']) // Se o campo é JSON no banco
-        ]);
-
-        //retornando data e status http ok
-        return response()->json($tool, 201);
+        // validating data
+        $data = $request->validated();
+        
+        try {
+            $tool = Tool::create([
+                'title' => $data['title'],
+                'link' => $data['link'],
+                'description' => $data['description'],
+                'tags' => json_encode($data['tags'])
+            ]);
+            
+            return response()->json([
+                'message' => 'Ferramenta criada com sucesso',
+                'data' => $tool
+            ], 201);
+        } catch (Exception $error) {
+            Log::error('Erro ao criar ferramenta: ' . $error->getMessage());
+            return response()->json([
+                'message' => 'Erro ao criar ferramenta',
+                'error' => $error->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -63,25 +79,16 @@ class ToolController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(tool $tool)
     {
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatetoolRequest $request, tool $tool)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $tool = Tool::findOrFail($id);
