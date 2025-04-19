@@ -9,6 +9,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request){
 });
 
 //Rotas
-Route::get('/tools', [ToolController::class, 'index']);
-Route::post('/tools', [ToolController::class, 'store']);
-Route::delete('/tools/{id}', [ToolController::class, 'destroy']);
+Route::get('/v1/tools', [ToolController::class, 'index']);
+Route::post('/v1/tools', [ToolController::class, 'store']);
+Route::delete('/v1/tools/{id}', [ToolController::class, 'destroy']);

@@ -17,7 +17,7 @@ use OpenApi\Annotations as OA;
  *     description="Documentação da API do Desafio Back"
  * )
  * @OA\Server(
- *     url="http://localhost:8000/api/v1",
+ *     url="http://localhost:3000/api/v1",
  *     description="Servidor local"
  * )
  *  * @OA\Schema(
@@ -25,7 +25,6 @@ use OpenApi\Annotations as OA;
  *     type="object",
  *     title="Tool",
  *     description="Modelo de uma ferramenta",
- *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="title", type="string", example="Nova ferramenta"),
  *     @OA\Property(property="link", type="string", example="http://example.com"),
  *     @OA\Property(property="description", type="string", example="Descrição da ferramenta"),
@@ -58,7 +57,8 @@ class ToolController extends Controller
      *     )
      * )
      */
-    public function index(Request $request)
+
+     public function index(Request $request)
     {
         $tag = $request->query('tag');
 
