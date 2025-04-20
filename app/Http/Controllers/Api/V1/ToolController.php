@@ -31,32 +31,34 @@ use OpenApi\Annotations as OA;
  *     @OA\Property(property="tags", type="array", @OA\Items(type="string"), example={"tag1", "tag2"})
  * )
  */
+
+ 
 class ToolController extends Controller
 {
-    /**
-     * @OA\Get(
-     *     path="/tools",
-     *     summary="Lista todas as ferramentas",
-     *     description="Retorna todas as ferramentas ou filtra por tags.",
-     *     @OA\Parameter(
-     *         name="tag",
-     *         in="query",
-     *         description="Filtrar ferramentas por tags (separadas por vírgula, exemplo: 'tag1,tag2')",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de ferramentas retornada com sucesso",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Tool")
-     *         )
-     *     )
-     * )
-     */
+/**
+ * @OA\Get(
+ *     path="/tools",
+ *     summary="Lista todas as ferramentas",
+ *     description="Retorna todas as ferramentas ou filtra por tags.",
+ *     tags={"Tools"},
+ *     @OA\Parameter(
+ *         name="tag",
+ *         in="query",
+ *         description="Filtrar ferramentas por tags (separadas por vírgula, exemplo: 'tag1,tag2')",
+ *         required=false,
+ *         @OA\Schema(type="string")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Lista de ferramentas retornada com sucesso",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(ref="#/components/schemas/Tool")
+ *         )
+ *     )
+ * )
+ */
+
 
      public function index(Request $request)
     {
@@ -79,28 +81,29 @@ class ToolController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/tools",
-     *     summary="Cria uma nova ferramenta",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Tool")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Ferramenta criada com sucesso",
-     *         @OA\JsonContent(ref="#/components/schemas/Tool")
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Erro ao criar ferramenta",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Erro ao criar ferramenta"),
-     *             @OA\Property(property="error", type="string", example="Detalhes do erro")
-     *         )
-     *     )
+     *      path="/tools",
+     *      summary="Cria uma nova ferramenta",
+     *      tags={"Tools"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/Tool")
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Ferramenta criada com sucesso",
+     *          @OA\JsonContent(ref="#/components/schemas/Tool")
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Erro ao criar ferramenta",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Erro ao criar ferramenta"),
+     *              @OA\Property(property="error", type="string", example="Detalhes do erro")
+     *          )
+     *      )
      * )
      */
-    public function store(UpdatetoolRequest $request)
+    public function store(StoretoolRequest $request)
     {
         // Validando os dados
         $data = $request->validated();
@@ -110,7 +113,7 @@ class ToolController extends Controller
                 'title' => $data['title'],
                 'link' => $data['link'],
                 'description' => $data['description'],
-                'tags' => json_encode($data['tags'])
+                'tags' => ($data['tags'])
             ]);
 
             return response()->json([
@@ -128,27 +131,28 @@ class ToolController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/tools/{id}",
-     *     summary="Exclui uma ferramenta pelo ID",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID da ferramenta a ser excluída",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Ferramenta excluída com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Ferramenta excluída com sucesso.")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Ferramenta não encontrada"
-     *     )
-     * )
+     *      path="/tools/{id}",
+     *      summary="Exclui uma ferramenta pelo ID",
+     *      tags={"Tools"},    
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID da ferramenta a ser excluída",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Ferramenta excluída com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Ferramenta excluída com sucesso.")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Ferramenta não encontrada"
+     *      )
+     *  )
      */
     public function destroy($id)
     {

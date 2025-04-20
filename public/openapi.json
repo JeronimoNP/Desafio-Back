@@ -14,6 +14,9 @@
     "paths": {
         "/tools": {
             "get": {
+                "tags": [
+                    "Tools"
+                ],
                 "summary": "Lista todas as ferramentas",
                 "description": "Retorna todas as ferramentas ou filtra por tags.",
                 "operationId": "bd3375cee38e7b988f84e622337697b5",
@@ -45,6 +48,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "Tools"
+                ],
                 "summary": "Cria uma nova ferramenta",
                 "operationId": "c827e9e594014e1ad7d329a872e0c35f",
                 "requestBody": {
@@ -93,6 +99,9 @@
         },
         "/tools/{id}": {
             "delete": {
+                "tags": [
+                    "Tools"
+                ],
                 "summary": "Exclui uma ferramenta pelo ID",
                 "operationId": "48cc66caf839068fd222bec8fcff3449",
                 "parameters": [
@@ -132,6 +141,21 @@
     },
     "components": {
         "schemas": {
+            "Cliente": {
+                "title": "Cliente",
+                "description": "Modelo de Cliente",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "xxxxx@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "123Abc"
+                    }
+                },
+                "type": "object"
+            },
             "Tool": {
                 "title": "Tool",
                 "description": "Modelo de uma ferramenta",
@@ -162,5 +186,11 @@
                 "type": "object"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Tools",
+            "description": "Tools"
+        }
+    ]
 }

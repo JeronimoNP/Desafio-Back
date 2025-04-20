@@ -17,6 +17,10 @@ class Tool extends Model{
         'tags'
     ];
 
+    protected $casts = [
+        'tags' => 'array'
+    ];
+
     //protects id from forced insertion
     protected $guarded = ['id'];
 }
