@@ -70,10 +70,11 @@ Após o login, um token será retornado para ser usado nas próximas requisiçõ
 
 ### Rota de Login
 **POST** `/api/v1/login`
-**Corpo da requisição**
-    ```bash *Headers*
-        Accept application/json
 
+**Headers**
+    ```bash 
+        Accept application/json
+**Corpo da requisição**
     ```bash
     {
         "email": "usuario@gmail.com",
@@ -84,3 +85,74 @@ Após o login, um token será retornado para ser usado nas próximas requisiçõ
     {
         "token": "seu-token"
     }
+## 🧰 Cadastro de Ferramentas
+
+### 📥 POST `/api/v1/tools`
+
+**Requer autenticação!**
+
+**JSON de exemplo:**
+
+```json
+{
+  "title": "typescript",
+  "link": "https://code.visualstudio.com",
+  "description": "Editor de código leve e poderoso",
+  "tags": ["editor", "code", "microsoft", "node", "teste"]
+}
+```
+
+**Resposta esperada:**
+
+```json
+{
+  "message": "Tool created successfully",
+  "data": {
+    "id": 1,
+    "title": "typescript",
+    "link": "https://code.visualstudio.com",
+    "description": "Editor de código leve e poderoso",
+    "tags": ["editor", "code", "microsoft", "node", "teste"],
+    "created_at": "2025-04-20T00:00:00.000000Z",
+    "updated_at": "2025-04-20T00:00:00.000000Z"
+  }
+}
+```
+
+---
+
+## 📚 Documentação da API
+
+A documentação segue o padrão Swagger/OpenAPI.
+
+Após rodar o projeto e gerar os arquivos:
+
+```bash
+php artisan l5-swagger:generate
+```
+
+Acesse via navegador:
+
+📄 [`http://localhost:8000/api/documentation`](http://localhost:8000/api/documentation)
+
+---
+
+## 📌 Observações
+
+- As validações são feitas via Form Requests.
+- Os tokens são gerados apenas após autenticação bem-sucedida.
+- Requisições sem header `Accept: application/json` recebem resposta padrão HTML.
+
+---
+
+## 👨‍💼 Autor
+
+Desenvolvido por **Jeronimo Noleto Pacheco**  
+📢 [familiadojeronimo@gmail.com](mailto:familiadojeronimo@gmail.com)
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
