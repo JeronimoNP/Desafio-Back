@@ -72,15 +72,17 @@ Após o login, um token será retornado para ser usado nas próximas requisiçõ
 **POST** `/api/v1/login`
 
 **Headers**
-    ```bash 
+    ```json
         Accept application/json
+    ```
 **Corpo da requisição**
     ```bash
     {
         "email": "usuario@gmail.com",
         "password": "senhaSegura123", //Obrigatorio 6 caracteres ou números
     }
-    **Resposta: 200**
+
+**Resposta: 200**
     ```bash
     {
         "token": "seu-token"
@@ -128,12 +130,12 @@ A documentação segue o padrão Swagger/OpenAPI.
 Após rodar o projeto e gerar os arquivos:
 
 ```bash
-php artisan l5-swagger:generate
+php swagger.php
 ```
 
 Acesse via navegador:
 
-📄 [`http://localhost:8000/api/documentation`](http://localhost:8000/api/documentation)
+📄 [`http://localhost:3000/api/documentation`](http://localhost:3000/api/documentation)
 
 ---
 
