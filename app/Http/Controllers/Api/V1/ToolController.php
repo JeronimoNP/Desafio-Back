@@ -20,6 +20,13 @@ use OpenApi\Annotations as OA;
  *     url="http://localhost:3000/api/v1",
  *     description="Servidor local"
  * )
+ *  @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     description="Insira o token no formato: Bearer {seu-token}"
+ * )
  *  * @OA\Schema(
  *     schema="Tool",
  *     type="object",
@@ -82,10 +89,19 @@ class ToolController extends Controller
      *      path="/tools",
      *      summary="Cria uma nova ferramenta",
      *      tags={"Tools"},
+     *      security={{"bearerAuth":{}}},
+     * 
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/Tool")
      *      ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Token ausente ou inválido",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
+     *     ),
      *      @OA\Response(
      *          response=201,
      *          description="Ferramenta criada com sucesso",
@@ -131,6 +147,7 @@ class ToolController extends Controller
      *      path="/tools/{id}",
      *      summary="Exclui uma ferramenta pelo ID",
      *      tags={"Tools"},    
+     *      security={{"bearerAuth":{}}},
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
@@ -148,7 +165,14 @@ class ToolController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Ferramenta não encontrada"
-     *      )
+     *      ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Token ausente ou inválido",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
+     *     ),
      *  )
      */
     public function destroy($id)

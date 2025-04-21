@@ -64,7 +64,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/clientes": {
@@ -215,6 +220,22 @@
                     }
                 },
                 "responses": {
+                    "401": {
+                        "description": "Token ausente ou inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "201": {
                         "description": "Ferramenta criada com sucesso",
                         "content": {
@@ -245,7 +266,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/tools/{id}": {
@@ -285,8 +311,29 @@
                     },
                     "404": {
                         "description": "Ferramenta não encontrada"
+                    },
+                    "401": {
+                        "description": "Token ausente ou inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -335,6 +382,14 @@
                     }
                 },
                 "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Insira o token no formato: Bearer {seu-token}",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },
