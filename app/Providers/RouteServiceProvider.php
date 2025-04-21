@@ -17,8 +17,15 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
+    public function boot()
     {
-        //
+        parent::boot();
+
+        Route::model('user', User::class);
+    
+        // Force JSON response for API routes
+        if ($this->app->runningInConsole()) {
+            return response()->json(['message' => 'Console Mode'], 200);
+        }
     }
 }

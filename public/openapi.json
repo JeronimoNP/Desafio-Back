@@ -12,13 +12,164 @@
         }
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Autenticar Cliente",
+                "description": "Faz login do cliente e retorna um token de autenticação",
+                "operationId": "loginCliente",
+                "requestBody": {
+                    "description": "Dados de login",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login bem-sucedido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|abcdefg123456..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro na autenticação"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clientes": {
+            "post": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Registrar novo cliente",
+                "description": "Cria um novo cliente com email e senha",
+                "operationId": "storeCliente",
+                "requestBody": {
+                    "description": "Dados do cliente",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cliente criado com sucesso"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "exemplo@email.com"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-04-20T14:30:00Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-04-20T14:30:00Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The email field is required. (and 1 more error)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Invalid domain, email must be Gmail."
+                                                    }
+                                                },
+                                                "password": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The password field must be at least 6 characters."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/tools": {
             "get": {
                 "tags": [
                     "Tools"
                 ],
-                "summary": "Lista todas as ferramentas",
-                "description": "Retorna todas as ferramentas ou filtra por tags.",
+                "summary": "Lista ferramentas (com ou sem filtro por tags)",
                 "operationId": "bd3375cee38e7b988f84e622337697b5",
                 "parameters": [
                     {
@@ -33,7 +184,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de ferramentas retornada com sucesso",
+                        "description": "Lista de ferramentas (filtradas ou não)",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -188,6 +339,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Cliente",
+            "description": "Cliente"
+        },
         {
             "name": "Tools",
             "description": "Tools"

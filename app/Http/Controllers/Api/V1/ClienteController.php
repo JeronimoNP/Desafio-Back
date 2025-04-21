@@ -37,12 +37,42 @@ class ClienteController extends Controller
     }
 
 
+/**
+ * @OA\Post(
+ *     path="/login",
+ *     summary="Autenticar Cliente",
+ *     description="Faz login do cliente e retorna um token de autenticação",
+ *     operationId="loginCliente",
+ *     tags={"Cliente"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="Dados de login",
+ *         @OA\JsonContent(ref="#/components/schemas/Cliente")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Login bem-sucedido",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="token", type="string", example="1|abcdefg123456...")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Credenciais inválidas",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="message", type="string", example="Erro na autenticação")
+ *         )
+ *     )
+ * )
+ */
 
     public function authenticate(LoginClienteRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
-        if(Auth::guard->attempt($credentials)){
+        if(Auth::guard()->attempt($credentials)){
             $cliente = Auth::user();
             $token = $cliente->createToken('cliente-token')->plainTextToken;
 
@@ -64,9 +94,58 @@ class ClienteController extends Controller
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+/**
+ * @OA\Post(
+ *     path="/clientes",
+ *     summary="Registrar novo cliente",
+ *     description="Cria um novo cliente com email e senha",
+ *     operationId="storeCliente",
+ *     tags={"Cliente"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="Dados do cliente",
+ *         @OA\JsonContent(ref="#/components/schemas/Cliente")
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="Cliente criado com sucesso",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="message", type="string", example="Cliente criado com sucesso"),
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="object",
+ *                 @OA\Property(property="id", type="integer", example=1),
+ *                 @OA\Property(property="email", type="string", example="exemplo@email.com"),
+ *                 @OA\Property(property="created_at", type="string", format="date-time", example="2025-04-20T14:30:00Z"),
+ *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2025-04-20T14:30:00Z")
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Erro de validação",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="message", type="string", example="The email field is required. (and 1 more error)"),
+ *             @OA\Property(
+ *                 property="errors",
+ *                 type="object",
+ *                 @OA\Property(
+ *                     property="email",
+ *                     type="array",
+ *                     @OA\Items(type="string", example="Invalid domain, email must be Gmail.")
+ *                 ),
+ *                 @OA\Property(
+ *                     property="password",
+ *                     type="array",
+ *                     @OA\Items(type="string", example="The password field must be at least 6 characters.")
+ *                 )
+ *             )
+ *         )
+ *     )
+ * )
+ */
     public function store(StoreClienteRequest $request)
     {
         $data = $request->validated();

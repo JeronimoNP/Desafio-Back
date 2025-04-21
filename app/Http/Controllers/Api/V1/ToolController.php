@@ -38,8 +38,7 @@ class ToolController extends Controller
 /**
  * @OA\Get(
  *     path="/tools",
- *     summary="Lista todas as ferramentas",
- *     description="Retorna todas as ferramentas ou filtra por tags.",
+ *     summary="Lista ferramentas (com ou sem filtro por tags)",
  *     tags={"Tools"},
  *     @OA\Parameter(
  *         name="tag",
@@ -50,7 +49,7 @@ class ToolController extends Controller
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="Lista de ferramentas retornada com sucesso",
+ *         description="Lista de ferramentas (filtradas ou não)",
  *         @OA\JsonContent(
  *             type="array",
  *             @OA\Items(ref="#/components/schemas/Tool")
@@ -58,7 +57,6 @@ class ToolController extends Controller
  *     )
  * )
  */
-
 
      public function index(Request $request)
     {
@@ -117,11 +115,10 @@ class ToolController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Ferramenta criada com sucesso',
+                'message' => 'Tool created successfully',
                 'data' => $tool
             ], 201);
         } catch (\Exception $error) {
-            \Log::error('Erro ao criar ferramenta: ' . $error->getMessage());
             return response()->json([
                 'message' => 'Erro ao criar ferramenta',
                 'error' => $error->getMessage()
