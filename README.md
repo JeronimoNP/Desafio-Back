@@ -65,6 +65,8 @@ Antes de rodar esse projeto, certifique-se de ter instalado na maquina:
 8. **Rode o servidor local com a porta 3000**
     ```bash
     php artisan serve --port=3000
+    ou
+    composer serve
 9.  **Teste a rota get no navegador**
     ```bash
     http://127.0.0.1:3000/api/v1/tools/

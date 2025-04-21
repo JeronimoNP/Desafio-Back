@@ -58,7 +58,8 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
-        ]
+        ],
+        "serve": "php artisan serve --port=3000"
     },
     "extra": {
         "laravel": {
