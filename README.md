@@ -52,7 +52,7 @@ Antes de rodar esse projeto, certifique-se de ter instalado na maquina:
     php artisan key:generate
 5. **Configure seu banco de dados no arquivo .env**
 <p align="center">
-  <img src="assets/imagem-env.png" alt="Configuração do .env" width="500">
+  <img src="image\image.png" alt="Configuração do .env" width="500">
 </p>
 
 6. **Execute as migrations**
