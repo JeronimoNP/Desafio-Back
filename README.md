@@ -51,7 +51,10 @@ Antes de rodar esse projeto, certifique-se de ter instalado na maquina:
     ```bash
     php artisan key:generate
 5. **Configure seu banco de dados no arquivo .env**
-![Exemplo](image.png)
+<p align="center">
+  <img src="assets/imagem-env.png" alt="Configuração do .env" width="500">
+</p>
+
 6. **Execute as migrations**
     ```bash
     php artisan migrate
