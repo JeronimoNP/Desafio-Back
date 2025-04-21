@@ -61,3 +61,26 @@ Antes de rodar esse projeto, certifique-se de ter instalado na maquina:
 7. **Rode o servidor local com a porta 3000**
     ```bash
     php artisan serve --port=3000
+
+---
+
+## Autenticação 🔒
+A API usa o Laravel Sanctum para autenticação via token.
+Após o login, um token será retornado para ser usado nas próximas requisições protegidas.
+
+### Rota de Login
+**POST** `/api/v1/login`
+**Corpo da requisição**
+    ```bash *Headers*
+        Accept application/json
+
+    ```bash
+    {
+        "email": "usuario@gmail.com",
+        "password": "senhaSegura123", //Obrigatorio 6 caracteres ou números
+    }
+    **Resposta: 200**
+    ```bash
+    {
+        "token": "seu-token"
+    }
