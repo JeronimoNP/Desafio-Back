@@ -41,3 +41,20 @@ Antes de rodar esse projeto, certifique-se de ter instalado na maquina:
     ```bash
     git clone https://github.com/JeronimoNP/Desafio-Back.git
     cd Desafio-Back
+2. **Instale as dependências**
+    ```bash
+    composer install
+3. **Copie o .env de exemplo e configure as variáveis**
+    ```bash
+    cp .env.example .env
+4. **Gere a chave da aplicação**
+    ```bash
+    php artisan key:generate
+5. **Configure seu banco de dados no arquivo .env**
+![Exemplo](image.png)
+6. **Execute as migrations**
+    ```bash
+    php artisan migrate
+7. **Rode o servidor local com a porta 3000**
+    ```bash
+    php artisan serve --port=3000
