@@ -58,10 +58,18 @@ Antes de rodar esse projeto, certifique-se de ter instalado na maquina:
 6. **Execute as migrations**
     ```bash
     php artisan migrate
-7. **Rode o servidor local com a porta 3000**
+7. **Popularize o banco de dados com dados de teste**
+   ```bash
+   php artisan db:seed
+   ```
+8. **Rode o servidor local com a porta 3000**
     ```bash
     php artisan serve --port=3000
-
+9.  **Teste a rota get no navegador**
+    ```bash
+    http://127.0.0.1:3000/api/v1/tools/
+    ```
+* Obs: ele retornara 15 tools por vez, para visualizar a outra pagina acesse a url: http://127.0.0.1:3000/api/v1/tools?page=1 ou acesse o link no campo links no final do corpo json.
 ---
 
 ## Autenticação 🔒
@@ -72,22 +80,27 @@ Após o login, um token será retornado para ser usado nas próximas requisiçõ
 **POST** `/api/v1/login`
 
 **Headers**
-    ```json
+```json
         Accept application/json
-    ```
+``` 
+
 **Corpo da requisição**
-    ```bash
+
+```json
     {
         "email": "usuario@gmail.com",
         "password": "senhaSegura123", //Obrigatorio 6 caracteres ou números
     }
+```
+
 
 **Resposta: 200**
-    ```bash
+```bash
     {
         "token": "seu-token"
     }
-## 🧰 Cadastro de Ferramentas
+```
+## 🟥 Cadastro de Ferramentas
 
 ### 📥 POST `/api/v1/tools`
 
@@ -104,7 +117,7 @@ Após o login, um token será retornado para ser usado nas próximas requisiçõ
 }
 ```
 
-**Resposta esperada:**
+**Resposta esperada: 201**
 
 ```json
 {
@@ -120,7 +133,69 @@ Após o login, um token será retornado para ser usado nas próximas requisiçõ
   }
 }
 ```
+## 🟩 Listando Ferramentas
 
+### 📥 Get `/api/v1/tools`
+**Resposta esperada:**
+```json
+{
+	"current_page": 1,
+	"data": [
+		{
+			"id": 1,
+			"title": "consequuntur est voluptas",
+			"link": "http://www.boyer.org/consequatur-qui-totam-dolorum-iste",
+			"description": "Optio quod dolore nesciunt voluptatum molestias et ut vitae optio asperiores dolores neque.",
+			"tags": [
+				"backend",
+				"javascript",
+				"security"
+			],
+			"created_at": "2025-04-20T17:26:06.000000Z",
+			"updated_at": "2025-04-20T17:26:06.000000Z"
+		},
+		{
+			"id": 2,
+			"title": "quae in facere",
+			"link": "http://yundt.net/vitae-deserunt-accusantium-voluptatibus-non-iusto-aut-eos",
+			"description": "Qui a accusamus consequuntur molestias harum autem dicta commodi sit distinctio quae.",
+			"tags": [
+				"api",
+				"web",
+				"javascript"
+			],
+			"created_at": "2025-04-20T17:26:06.000000Z",
+			"updated_at": "2025-04-20T17:26:06.000000Z"
+		}
+    ]
+}
+```
+
+## 🟩 filtrando Ferramentas por tags
+
+### 📥 Get `/api/v1/tools?tag=backend`
+**Resposta esperada:**
+```json
+{
+	"current_page": 1,
+	"data": [
+		{
+			"id": 1,
+			"title": "consequuntur est voluptas",
+			"link": "http://www.boyer.org/consequatur-qui-totam-dolorum-iste",
+			"description": "Optio quod dolore nesciunt voluptatum molestias et ut vitae optio asperiores dolores neque.",
+			"tags": [
+				"backend",
+				"javascript",
+				"security"
+			],
+			"created_at": "2025-04-20T17:26:06.000000Z",
+			"updated_at": "2025-04-20T17:26:06.000000Z"
+		}
+    ]
+}
+```
+* obs: podemos filtra utilizando mais de uma tag por exemplo(`/api/v1/tools?tag=backend,javascript`) e buscara por ferramentas com essas tags backend e javascript.
 ---
 
 ## 📚 Documentação da API
@@ -135,7 +210,7 @@ php swagger.php
 
 Acesse via navegador:
 
-📄 [`http://localhost:3000/api/documentation`](http://localhost:3000/api/documentation)
+📄 [`http://127.0.0.1:3000/swagger/index.html`](http://127.0.0.1:3000/swagger/index.html)
 
 ---
 
